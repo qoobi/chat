@@ -85,10 +85,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
             UIAlertAction in
             self.chooseFromLibrary()
         })
-        alert.addAction(UIAlertAction(title: "Удалить изображение", style: .destructive) {
-            UIAlertAction in
-            self.profileImageView.image = UIImage(named: "defaultProfileImage")
-        })
+        if self.profileImageView.image != UIImage(named: "defaultProfileImage") {
+            alert.addAction(UIAlertAction(title: "Удалить изображение", style: .destructive) {
+                UIAlertAction in
+                self.profileImageView.image = UIImage(named: "defaultProfileImage")
+            })
+        }
         alert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
