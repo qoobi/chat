@@ -76,7 +76,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="male-user-profile-picture_318-37825" translatesAutoresizingMaskIntoConstraints="NO" id="iiV-O7-6SZ">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage" translatesAutoresizingMaskIntoConstraints="NO" id="iiV-O7-6SZ">
                                 <rect key="frame" x="26" y="216" width="323" height="323"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="iiV-O7-6SZ" secondAttribute="height" multiplier="1:1" id="IZA-kI-7n9"/>
@@ -97,22 +97,37 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="fGX-cw-MgO"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="colorButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wa3-jH-AJz"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nol-ok-WBl">
                                 <rect key="frame" x="85.5" y="573" width="66" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="colorButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="afU-1c-Vf0"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpl-16-L2w">
                                 <rect key="frame" x="154.5" y="573" width="66" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="colorButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R64-zz-4sb"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r73-J8-rSU">
                                 <rect key="frame" x="223.5" y="573" width="66" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="colorButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CSq-WY-l6R"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyn-tP-vTw">
                                 <rect key="frame" x="292.5" y="573" width="66.5" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="colorButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="akH-bW-3f8"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Цвет текста" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWx-be-ExT">
                                 <rect key="frame" x="16" y="547" width="85" height="18"/>
@@ -170,8 +185,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="aboutTextView" destination="Kxd-NV-OAC" id="uGO-FK-dAq"/>
+                        <outlet property="colorLabel" destination="MWx-be-ExT" id="cU4-BB-oBQ"/>
                         <outlet property="loginLabel" destination="9nE-nC-meu" id="QwR-95-b6R"/>
                         <outlet property="loginTextField" destination="yyJ-3B-yNh" id="O7w-q6-8dx"/>
+                        <outlet property="profileImageView" destination="iiV-O7-6SZ" id="h3c-BA-mBb"/>
                         <outlet property="textColorLabel" destination="MWx-be-ExT" id="vN8-hJ-Awn"/>
                     </connections>
                 </viewController>
@@ -181,6 +199,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="male-user-profile-picture_318-37825" width="300" height="300"/>
+        <image name="defaultProfileImage" width="300" height="300"/>
     </resources>
 </document>

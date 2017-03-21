@@ -300,6 +300,7 @@
 				A65D714C1E7077CC003A787D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
