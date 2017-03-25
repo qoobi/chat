@@ -138,8 +138,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
 
     }
     
+    @IBAction func closeAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func saveAction(_ sender: UIButton) {
         print("Сохранение данных профиля")
+        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func colorButtonAction(_ sender: UIButton) {
