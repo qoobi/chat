@@ -51,13 +51,19 @@ class ConversationCell: UITableViewCell, ConversationCellConfiguration {
     }
     var date: Date? {
         didSet {
-            let dateFormatter = DateFormatter()
-            if Calendar.current.isDateInToday(date!) {
-                dateFormatter.dateFormat = "HH:mm"
+            if date != nil {
+                let dateFormatter = DateFormatter()
+                if Calendar.current.isDateInToday(date!) {
+                    dateFormatter.dateFormat = "HH:mm"
+                } else {
+                    dateFormatter.dateFormat = "dd MMM"
+                }
+                dateLabel.text = dateFormatter.string(from: date!)
+                dateLabel.sizeToFit()
+                dateLabel.layoutIfNeeded()
             } else {
-                dateFormatter.dateFormat = "dd MMM"
+                dateLabel.text = ""
             }
-            dateLabel.text = dateFormatter.string(from: date!)
         }
     }
     var online: Bool = true {

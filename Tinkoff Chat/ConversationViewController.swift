@@ -12,13 +12,36 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var newMessageView: UIView!
+    @IBOutlet weak var newMessageViewHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    var showNewMessageView: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
+        // TODO: fix bug with left-to-right drag
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if !showNewMessageView {
+            newMessageViewHeightConstraint.constant = 0
+            newMessageView.isHidden = true
+        } else {
+            newMessageViewHeightConstraint.constant = 44
+            newMessageView.isHidden = false
+        }
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
     
     func keyboardWillChangeFrame(notification: Notification) {
@@ -32,7 +55,11 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
                     curve = .curveEaseInOut
                 }
                 self.bottomConstraint?.constant = UIScreen.main.bounds.size.height - frame.origin.y
-                UIView.animate(withDuration: duration, delay: 0, options: curve!, animations: { self.view.layoutIfNeeded() }, completion: nil)
+                UIView.animate(withDuration: duration, delay: 0, options: curve!, animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: { (b) in
+                    self.tableView.reloadData()
+                })
             }
         }
     }

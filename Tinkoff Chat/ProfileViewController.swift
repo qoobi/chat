@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ProfileViewController.swift
 //  Tinkoff Chat
 //
 //  Created by Mikhail Gilmutdinov on 08.03.17.
@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private var tapCounter = 0
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var textColorLabel: UILabel!

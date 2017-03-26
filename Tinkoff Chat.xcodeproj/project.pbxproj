@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A65D713C1E7077CC003A787D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65D713B1E7077CC003A787D /* AppDelegate.swift */; };
-		A65D713E1E7077CC003A787D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65D713D1E7077CC003A787D /* ViewController.swift */; };
+		A65D713E1E7077CC003A787D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65D713D1E7077CC003A787D /* ProfileViewController.swift */; };
 		A65D71411E7077CC003A787D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A65D713F1E7077CC003A787D /* Main.storyboard */; };
 		A65D71431E7077CC003A787D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A65D71421E7077CC003A787D /* Assets.xcassets */; };
 		A65D71461E7077CC003A787D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A65D71441E7077CC003A787D /* LaunchScreen.storyboard */; };
@@ -21,7 +21,7 @@
 /* Begin PBXFileReference section */
 		A65D71381E7077CC003A787D /* Tinkoff Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tinkoff Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A65D713B1E7077CC003A787D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A65D713D1E7077CC003A787D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A65D713D1E7077CC003A787D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		A65D71401E7077CC003A787D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A65D71421E7077CC003A787D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A65D71451E7077CC003A787D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				A65D713B1E7077CC003A787D /* AppDelegate.swift */,
-				A65D713D1E7077CC003A787D /* ViewController.swift */,
+				A65D713D1E7077CC003A787D /* ProfileViewController.swift */,
 				A65D713F1E7077CC003A787D /* Main.storyboard */,
 				A6821A501E8705BE002ECB76 /* ConversationCell.swift */,
 				A6821A581E87C2F5002ECB76 /* MessageCell.swift */,
@@ -150,7 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6821A511E8705BE002ECB76 /* ConversationCell.swift in Sources */,
-				A65D713E1E7077CC003A787D /* ViewController.swift in Sources */,
+				A65D713E1E7077CC003A787D /* ProfileViewController.swift in Sources */,
 				A6821A571E87B914002ECB76 /* ConversationViewController.swift in Sources */,
 				A6821A591E87C2F5002ECB76 /* MessageCell.swift in Sources */,
 				A65D713C1E7077CC003A787D /* AppDelegate.swift in Sources */,

@@ -17,6 +17,14 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         // Do any additional setup after loading the view, typically from a nib.
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let selectedRow = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedRow, animated: animated)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,10 +60,11 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "conversation cell", for: indexPath) as! ConversationCell
         cell.online = indexPath.section == 0
-        cell.date = Date() - Double(indexPath.row) * 3e4
         cell.name = messages[indexPath.row].0
         cell.message = messages[indexPath.row].1
+        cell.date = Date() - Double(indexPath.row) * 3e4
         cell.hasUnreadMessages = indexPath.row % 2 == 0
+        cell.layoutIfNeeded()
         return cell
     }
     
@@ -63,6 +72,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         if let cell = sender as? ConversationCell {
             if let conversation = segue.destination as? ConversationViewController {
                 conversation.title = cell.name
+                conversation.showNewMessageView = segue.identifier != "peek"
             }
         }
     }
