@@ -12,11 +12,29 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    func keyboardWillChangeFrame(notification: Notification) {
+        if let info = notification.userInfo {
+            if let frame = info[UIKeyboardFrameEndUserInfoKey] as? CGRect {
+                let duration = info[UIKeyboardAnimationDurationUserInfoKey] as? Double ?? 0
+                var curve: UIViewAnimationOptions?
+                if let raw = info[UIKeyboardAnimationCurveUserInfoKey] as? UInt {
+                    curve = UIViewAnimationOptions(rawValue: raw)
+                } else {
+                    curve = .curveEaseInOut
+                }
+                self.bottomConstraint?.constant = UIScreen.main.bounds.size.height - frame.origin.y
+                UIView.animate(withDuration: duration, delay: 0, options: curve!, animations: { self.view.layoutIfNeeded() }, completion: nil)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

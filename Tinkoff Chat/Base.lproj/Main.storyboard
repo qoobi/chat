@@ -123,8 +123,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SOn-oE-PcY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SOn-oE-PcY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="incoming message cell" focusStyle="custom" id="bcL-Kl-ykE" customClass="MessageCell" customModule="Tinkoff_Chat" customModuleProvider="target">
@@ -197,16 +197,50 @@
                                     <outlet property="delegate" destination="mCn-bg-8TR" id="7Y5-WX-cmz"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B1F-Vc-dpz">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2dV-dN-AsU">
+                                        <rect key="frame" x="8" y="0.0" width="317" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="wqF-W5-urv"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Jh-Kx-2Fg">
+                                        <rect key="frame" x="333" y="7" width="34" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="34" id="cqJ-mg-hDs"/>
+                                        </constraints>
+                                        <state key="normal" title="send"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="3Jh-Kx-2Fg" firstAttribute="centerY" secondItem="B1F-Vc-dpz" secondAttribute="centerY" id="1b7-ge-Iv2"/>
+                                    <constraint firstItem="3Jh-Kx-2Fg" firstAttribute="leading" secondItem="2dV-dN-AsU" secondAttribute="trailing" constant="8" id="8Au-3Y-GZ0"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Jh-Kx-2Fg" secondAttribute="trailing" constant="8" id="8oP-wU-Qqz"/>
+                                    <constraint firstAttribute="height" constant="44" id="QTS-QC-Z3B"/>
+                                    <constraint firstItem="2dV-dN-AsU" firstAttribute="leading" secondItem="B1F-Vc-dpz" secondAttribute="leading" constant="8" id="aiR-H1-UOC"/>
+                                    <constraint firstItem="2dV-dN-AsU" firstAttribute="centerY" secondItem="B1F-Vc-dpz" secondAttribute="centerY" id="ckc-Lt-Thk"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="LGS-kd-smJ" firstAttribute="top" secondItem="B1F-Vc-dpz" secondAttribute="bottom" id="2Na-7O-2R9"/>
                             <constraint firstItem="SOn-oE-PcY" firstAttribute="top" secondItem="9ZA-aq-WlG" secondAttribute="top" id="7X3-0W-4bN"/>
-                            <constraint firstItem="LGS-kd-smJ" firstAttribute="top" secondItem="SOn-oE-PcY" secondAttribute="bottom" id="OzN-Ni-7bp"/>
+                            <constraint firstAttribute="trailing" secondItem="B1F-Vc-dpz" secondAttribute="trailing" id="Kxs-3w-yiU"/>
                             <constraint firstItem="SOn-oE-PcY" firstAttribute="leading" secondItem="9ZA-aq-WlG" secondAttribute="leading" id="T4a-lv-0pV"/>
+                            <constraint firstItem="B1F-Vc-dpz" firstAttribute="top" secondItem="SOn-oE-PcY" secondAttribute="bottom" id="gmS-9V-roD"/>
                             <constraint firstAttribute="trailing" secondItem="SOn-oE-PcY" secondAttribute="trailing" id="mED-Vn-FqP"/>
+                            <constraint firstItem="B1F-Vc-dpz" firstAttribute="leading" secondItem="9ZA-aq-WlG" secondAttribute="leading" id="og9-uu-IXb"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomConstraint" destination="2Na-7O-2R9" id="Yrg-FF-YqQ"/>
                         <outlet property="tableView" destination="SOn-oE-PcY" id="wyw-ia-4TB"/>
                     </connections>
                 </viewController>
