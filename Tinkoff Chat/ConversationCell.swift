@@ -8,19 +8,46 @@
 
 import UIKit
 
-class ConversationCell: UITableViewCell {
+protocol ConversationCellConfiguration {
+    var name: String? { get set }
+    var message: String? { get set }
+    var date: Date? { get set }
+    var online: Bool { get set }
+    var hasUnreadMessages: Bool { get set }
+}
+
+class ConversationCell: UITableViewCell, ConversationCellConfiguration {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    private func setMessageFont() {
+        if message != nil {
+            if hasUnreadMessages {
+                messageLabel.font = .boldSystemFont(ofSize: 14.0)
+            } else {
+                messageLabel.font = .systemFont(ofSize: 14.0)
+            }
+        } else {
+            messageLabel.font = .italicSystemFont(ofSize: 14.0)
+        }
+    }
+    
     var name: String? {
-        get { return nameLabel.text }
-        set { nameLabel.text = name }
+        didSet {
+            nameLabel.text = name
+        }
     }
     var message: String? {
-        get { return messageLabel.text }
-        set { messageLabel.text = message }
+        didSet {
+            if message != nil {
+                messageLabel.text = message
+            } else {
+                messageLabel.text = "No messages yet"
+            }
+            setMessageFont()
+        }
     }
     var date: Date? {
         didSet {
@@ -36,7 +63,7 @@ class ConversationCell: UITableViewCell {
     var online: Bool = true {
         didSet {
             if online {
-                self.backgroundColor = .yellow
+                self.backgroundColor = UIColor(hue: 51/360, saturation: 0.26, brightness: 0.99, alpha: 1)
             } else {
                 self.backgroundColor = .white
             }
@@ -44,11 +71,7 @@ class ConversationCell: UITableViewCell {
     }
     var hasUnreadMessages: Bool = true {
         didSet {
-            if hasUnreadMessages {
-                messageLabel.font = .boldSystemFont(ofSize: 14.0)
-            } else {
-                messageLabel.font = .systemFont(ofSize: 14.0)
-            }
+            setMessageFont()
         }
     }
 }

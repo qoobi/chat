@@ -15,54 +15,13 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,17 +29,42 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return messages.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return ["Online", "History"][section]
     }
     
+    let messages = [
+        ("Олег", "Стартаперы смузи пьют, тыкают в планшетики и не думают о прибыли"),
+        ("Герман", "Потому что Agile в ИТ это — ничего, если у тебя нет Agile всей организации"),
+        ("Андрей", "Зачем дешевыми деньгами заливать экономику?"),
+        ("Эльвира", "Курс рубля останется стабильным: причин для обвала нет"),
+        ("Виктор", "Я не готов сидеть и отдыхать"),
+        ("Константин Константинопольский", nil),
+        ("Анатолий", "У нас очень много денег. Их просто вот совсем много"),
+        ("Георгий", "И тогда с развитием дигитализации все будет просто прекрасно"),
+        ("Дмитрий", "Денег нет, держитесь здесь 🦆"),
+        ("Donald", "I know words, I have the best words. I have the best, but there is no better words than stupid.")
+    ]
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "conversation cell", for: indexPath) as! ConversationCell
-        cell.date = Date()
+        cell.online = indexPath.section == 0
+        cell.date = Date() - Double(indexPath.row) * 3e4
+        cell.name = messages[indexPath.row].0
+        cell.message = messages[indexPath.row].1
+        cell.hasUnreadMessages = indexPath.row % 2 == 0
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let cell = sender as? ConversationCell {
+            if let conversation = segue.destination as? ConversationViewController {
+                conversation.title = cell.name
+            }
+        }
     }
 }
 
