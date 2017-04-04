@@ -24,7 +24,6 @@ class GCDDataManager: DataManager {
                 return
             }
             let saved = NSKeyedArchiver.archiveRootObject(data, toFile: path)
-            sleep(2)
             DispatchQueue.main.async { completion?(saved) }
         }
     }
@@ -62,7 +61,6 @@ class SaveOperation: Operation {
             OperationQueue.main.addOperation { self.completion?(false) }
         }
         let saved = NSKeyedArchiver.archiveRootObject(data, toFile: path)
-        sleep(2)
         OperationQueue.main.addOperation { self.completion?(saved) }
     }
 }

@@ -90,6 +90,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             alert.addAction(UIAlertAction(title: "Удалить изображение", style: .destructive) {
                 UIAlertAction in
                 self.profileImageView.image = UIImage(named: "defaultProfileImage")
+                self.gcdSaveButton.isEnabled = true
+                self.operationSaveButton.isEnabled = true
             })
         }
         alert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
