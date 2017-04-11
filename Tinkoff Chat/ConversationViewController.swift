@@ -17,6 +17,12 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var sendButton: UIButton!
+    
+    var userID: String?
+    weak var communicationManager: CommunicationManager?
+    
     var showNewMessageView: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +33,7 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: .UIKeyboardWillChangeFrame, object: nil)
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(hideKeyboard)))
+        self.sendButton.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +45,18 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
             newMessageViewHeightConstraint.constant = 44
             newMessageView.isHidden = false
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.communicationManager?.conversation = nil
+    }
+    
+    @IBAction func editingChanged(_ sender: Any) {
+        self.sendButton.isEnabled = self.textField.text != ""
+    }
+    
+    @IBAction func sendMessage(_ sender: Any) {
+        self.communicationManager!.sendMessage(text: self.textField.text!, fromUser: "", toUser: self.userID!)
     }
     
     func hideKeyboard() {
@@ -74,18 +93,19 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return self.communicationManager?.messages[self.userID!]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var reuseIdentifier: String
-        if indexPath.row < 3 {
+        let message = self.communicationManager?.messages[self.userID!]![indexPath.row]
+        if message!.direction == .incoming {
             reuseIdentifier = "incoming message cell"
         } else {
             reuseIdentifier = "outgoing message cell"
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MessageCell
-        cell.msg = String.init(repeating: "a", count: [30, 1, 300][indexPath.row % 3])
+        cell.msg = message!.text
         return cell
     }
 }

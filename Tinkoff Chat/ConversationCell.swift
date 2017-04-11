@@ -34,6 +34,7 @@ class ConversationCell: UITableViewCell, ConversationCellConfiguration {
         }
     }
     
+    var userID: String?
     var name: String? {
         didSet {
             nameLabel.text = name

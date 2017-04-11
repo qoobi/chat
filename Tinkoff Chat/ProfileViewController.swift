@@ -24,14 +24,6 @@ class SaveButton: UIButton {
 
 class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     private var tapCounter = 0
-    private var dataPath: String {
-        var path = ""
-        do {
-            try path = FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("data.dat").path
-        } catch {
-        }
-        return path
-    }
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var textColorLabel: UILabel!
     @IBOutlet weak var loginTextField: UITextField!
@@ -130,16 +122,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             return false
         }
         return true
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        print(#function)
-        for subview in view.subviews {
-            print(subview.description)
-        }
-
     }
     
     @IBAction func closeAction(_ sender: Any) {

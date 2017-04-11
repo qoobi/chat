@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A658BF081E9CBFCD0051EB31 /* Communications.swift in Sources */ = {isa = PBXBuildFile; fileRef = A658BF071E9CBFCD0051EB31 /* Communications.swift */; };
 		A65D713C1E7077CC003A787D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65D713B1E7077CC003A787D /* AppDelegate.swift */; };
 		A65D713E1E7077CC003A787D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A65D713D1E7077CC003A787D /* ProfileViewController.swift */; };
 		A65D71411E7077CC003A787D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A65D713F1E7077CC003A787D /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A658BF071E9CBFCD0051EB31 /* Communications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communications.swift; sourceTree = "<group>"; };
 		A65D71381E7077CC003A787D /* Tinkoff Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tinkoff Chat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A65D713B1E7077CC003A787D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A65D713D1E7077CC003A787D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			children = (
 				A65D713B1E7077CC003A787D /* AppDelegate.swift */,
 				A65D713D1E7077CC003A787D /* ProfileViewController.swift */,
+				A658BF071E9CBFCD0051EB31 /* Communications.swift */,
 				A65D713F1E7077CC003A787D /* Main.storyboard */,
 				A6767A981E93821200F8CF6C /* DataManager.swift */,
 				A6821A501E8705BE002ECB76 /* ConversationCell.swift */,
@@ -152,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A658BF081E9CBFCD0051EB31 /* Communications.swift in Sources */,
 				A6821A511E8705BE002ECB76 /* ConversationCell.swift in Sources */,
 				A65D713E1E7077CC003A787D /* ProfileViewController.swift in Sources */,
 				A6821A571E87B914002ECB76 /* ConversationViewController.swift in Sources */,

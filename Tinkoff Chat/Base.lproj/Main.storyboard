@@ -213,6 +213,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="editingChanged:" destination="mCn-bg-8TR" eventType="editingChanged" id="KSm-az-f7M"/>
+                                        </connections>
                                     </textField>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Jh-Kx-2Fg">
                                         <rect key="frame" x="333" y="7" width="34" height="30"/>
@@ -220,6 +223,9 @@
                                             <constraint firstAttribute="width" constant="34" id="cqJ-mg-hDs"/>
                                         </constraints>
                                         <state key="normal" title="send"/>
+                                        <connections>
+                                            <action selector="sendMessage:" destination="mCn-bg-8TR" eventType="touchUpInside" id="Nue-lH-7CU"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
@@ -248,7 +254,9 @@
                         <outlet property="bottomConstraint" destination="2Na-7O-2R9" id="Yrg-FF-YqQ"/>
                         <outlet property="newMessageView" destination="B1F-Vc-dpz" id="H8j-zo-Kxo"/>
                         <outlet property="newMessageViewHeightConstraint" destination="QTS-QC-Z3B" id="S7i-VZ-Ow1"/>
+                        <outlet property="sendButton" destination="3Jh-Kx-2Fg" id="ssd-z0-CX6"/>
                         <outlet property="tableView" destination="SOn-oE-PcY" id="wyw-ia-4TB"/>
+                        <outlet property="textField" destination="2dV-dN-AsU" id="JiM-NV-9b3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6fy-L8-jX6" userLabel="First Responder" sceneMemberID="firstResponder"/>

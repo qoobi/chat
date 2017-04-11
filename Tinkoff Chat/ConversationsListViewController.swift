@@ -11,13 +11,19 @@ import UIKit
 class ConversationsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    
+    var communicationManager: CommunicationManager?
+    var userName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
-        
+        let path = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("data.dat").path
+        let dict = NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String:Any]
+        if let dict = dict {
+            self.userName = dict["login"] as? String
+        }
+        self.communicationManager = CommunicationManager.init(withConversationsListViewController: self, userName: self.userName ?? "", serviceType: "tinkoff-chat")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,6 +31,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         if let selectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectedRow, animated: animated)
         }
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,11 +40,11 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return self.communicationManager!.users.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -59,11 +66,33 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "conversation cell", for: indexPath) as! ConversationCell
-        cell.online = indexPath.section == 0
-        cell.name = messages[indexPath.row].0
-        cell.message = messages[indexPath.row].1
-        cell.date = Date() - Double(indexPath.row) * 3e4
-        cell.hasUnreadMessages = indexPath.row % 2 == 0
+        // TODO: optimize
+        let sortedUsers = self.communicationManager!.users.sorted {
+            [weak self] (first, second) -> Bool in
+            let firstTime: Date? = self?.communicationManager!.messages[first.key]?.last?.date
+            let secondTime: Date? = self?.communicationManager!.messages[second.key]?.last?.date
+            if firstTime != nil {
+                if secondTime != nil {
+                    return firstTime! > secondTime!
+                } else {
+                    return true
+                }
+            } else {
+                if secondTime != nil {
+                    return false
+                } else {
+                    return first.value > second.value
+                }
+            }
+        }
+        let i = indexPath.row
+        cell.userID = sortedUsers[i].key
+        cell.online = true
+        cell.name = sortedUsers[i].value
+        let lastMessage = self.communicationManager!.messages[sortedUsers[i].key]?.last
+        cell.message = lastMessage?.text
+        cell.date = lastMessage?.date
+        cell.hasUnreadMessages = false
         cell.layoutIfNeeded()
         return cell
     }
@@ -72,7 +101,10 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         if let cell = sender as? ConversationCell {
             if let conversation = segue.destination as? ConversationViewController {
                 conversation.title = cell.name
+                conversation.userID = cell.userID
+                conversation.communicationManager = self.communicationManager
                 conversation.showNewMessageView = segue.identifier != "peek"
+                self.communicationManager?.conversation = conversation
             }
         }
     }
