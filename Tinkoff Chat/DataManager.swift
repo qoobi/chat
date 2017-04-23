@@ -10,6 +10,7 @@ import Foundation
 
 protocol DataManager {
     func save(data: [String:Any], toFile fileName: String, completion: ((Bool) -> Void)? )
+    func load(fromFile fileName: String, completion: @escaping (([String:Any]?) -> Void))
 }
 
 class GCDDataManager: DataManager {
@@ -65,9 +66,36 @@ class SaveOperation: Operation {
     }
 }
 
+class LoadOperation: Operation {
+    private var fileName: String
+    private var completion: (([String:Any]?) -> Void)?
+    init(fileName: String, completion: (([String:Any]?) -> Void)? ) {
+        self.fileName = fileName
+        self.completion = completion
+    }
+    override func main() {
+        var path = ""
+        do {
+            try path = FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("data.dat").path
+        } catch {
+            OperationQueue.main.addOperation { self.completion?(nil) }
+            return
+        }
+        OperationQueue.main.addOperation {
+            self.completion?(NSKeyedUnarchiver.unarchiveObject(withFile: path) as? [String:Any])
+        }
+    }
+}
+
 class OperationDataManager: DataManager {
     func save(data: [String:Any], toFile fileName: String, completion: ((Bool) -> Void)? ) {
         let operation = SaveOperation.init(data: data, fileName: fileName, completion: completion)
+        let operationQueue = OperationQueue()
+        operationQueue.qualityOfService = .userInitiated
+        operationQueue.addOperation(operation)
+    }
+    func load(fromFile fileName: String, completion: @escaping (([String : Any]?) -> Void)) {
+        let operation = LoadOperation.init(fileName: fileName, completion: completion)
         let operationQueue = OperationQueue()
         operationQueue.qualityOfService = .userInitiated
         operationQueue.addOperation(operation)

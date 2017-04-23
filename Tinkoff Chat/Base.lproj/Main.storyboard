@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jhE-xc-Czg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jhE-xc-Czg">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -285,13 +285,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBL-nB-QNG" customClass="SaveButton" customModule="Tinkoff_Chat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="623" width="179.5" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <color key="backgroundColor" red="1" green="0.8666666666666667" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="1Rt-E9-Hwk"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="GCD">
+                                <state key="normal" title="Сохранить">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
@@ -394,20 +394,6 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9F-uF-VzS" customClass="SaveButton" customModule="Tinkoff_Chat" customModuleProvider="target">
-                                <rect key="frame" x="195.5" y="623" width="179.5" height="44"/>
-                                <color key="backgroundColor" red="1" green="0.86666666670000003" blue="0.1764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="k58-f1-UQM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Operation">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="saveAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tIl-IG-ke0"/>
-                                </connections>
-                            </button>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" preservesSuperviewLayoutMargins="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JzC-nT-BOk">
                                 <rect key="frame" x="169" y="315.5" width="37" height="37"/>
                             </activityIndicatorView>
@@ -415,7 +401,6 @@
                         <color key="backgroundColor" white="0.94999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="9nE-nC-meu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="0Ln-AQ-M45"/>
-                            <constraint firstItem="G9F-uF-VzS" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="0uZ-xe-PFD"/>
                             <constraint firstItem="r73-J8-rSU" firstAttribute="leading" secondItem="dpl-16-L2w" secondAttribute="trailing" constant="3" id="1gc-6v-bQm"/>
                             <constraint firstItem="Quz-3g-c0M" firstAttribute="width" secondItem="Nol-ok-WBl" secondAttribute="width" id="1ou-fe-RNY"/>
                             <constraint firstItem="uBL-nB-QNG" firstAttribute="top" secondItem="Quz-3g-c0M" secondAttribute="bottom" constant="20" id="2Rs-QE-IOX"/>
@@ -429,6 +414,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uBL-nB-QNG" secondAttribute="bottom" id="I3K-fg-HmY"/>
                             <constraint firstItem="iiV-O7-6SZ" firstAttribute="top" secondItem="Nmr-oQ-yNa" secondAttribute="bottom" constant="8" id="IXm-t0-m4v"/>
                             <constraint firstItem="iiV-O7-6SZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="KH1-RI-paN"/>
+                            <constraint firstAttribute="trailing" secondItem="uBL-nB-QNG" secondAttribute="trailing" id="QDO-m6-eyg"/>
                             <constraint firstItem="Nol-ok-WBl" firstAttribute="height" secondItem="dpl-16-L2w" secondAttribute="height" id="QNW-FE-RmY"/>
                             <constraint firstItem="r73-J8-rSU" firstAttribute="centerY" secondItem="wyn-tP-vTw" secondAttribute="centerY" id="RUh-CI-tqQ"/>
                             <constraint firstItem="IXm-Ha-SAU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="SaR-ev-JV0"/>
@@ -441,7 +427,6 @@
                             <constraint firstItem="Kxd-NV-OAC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="VqT-V6-lXb"/>
                             <constraint firstItem="Nmr-oQ-yNa" firstAttribute="top" secondItem="Kxd-NV-OAC" secondAttribute="bottom" constant="8" id="WUJ-9T-DMD"/>
                             <constraint firstItem="yyJ-3B-yNh" firstAttribute="top" secondItem="9nE-nC-meu" secondAttribute="bottom" id="XXf-vm-3H9"/>
-                            <constraint firstItem="G9F-uF-VzS" firstAttribute="top" secondItem="wyn-tP-vTw" secondAttribute="bottom" constant="20" id="Xpo-tF-TjZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yyJ-3B-yNh" secondAttribute="trailing" id="Xyt-jk-wIL"/>
                             <constraint firstItem="Quz-3g-c0M" firstAttribute="height" secondItem="Nol-ok-WBl" secondAttribute="height" id="cB7-6w-0TY"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iiV-O7-6SZ" secondAttribute="trailing" id="cs1-ky-xkX"/>
@@ -450,7 +435,6 @@
                             <constraint firstItem="Nol-ok-WBl" firstAttribute="width" secondItem="dpl-16-L2w" secondAttribute="width" id="gAV-Md-Dxq"/>
                             <constraint firstItem="wyn-tP-vTw" firstAttribute="leading" secondItem="r73-J8-rSU" secondAttribute="trailing" constant="3" id="ii3-7E-1LZ"/>
                             <constraint firstItem="MWx-be-ExT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="kh8-eX-OQ5"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="G9F-uF-VzS" secondAttribute="bottom" id="li2-N1-yU2"/>
                             <constraint firstItem="dpl-16-L2w" firstAttribute="leading" secondItem="Nol-ok-WBl" secondAttribute="trailing" constant="3" id="lzl-Vs-bAr"/>
                             <constraint firstItem="r73-J8-rSU" firstAttribute="width" secondItem="wyn-tP-vTw" secondAttribute="width" id="n88-Gu-neh"/>
                             <constraint firstItem="uBL-nB-QNG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="nJd-rK-uDe"/>
@@ -458,9 +442,7 @@
                             <constraint firstItem="Kxd-NV-OAC" firstAttribute="top" secondItem="IXm-Ha-SAU" secondAttribute="bottom" id="rv5-cF-Muq"/>
                             <constraint firstItem="JzC-nT-BOk" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xAy-S4-bv5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wyn-tP-vTw" secondAttribute="trailing" id="xRN-3p-1Ki"/>
-                            <constraint firstItem="G9F-uF-VzS" firstAttribute="leading" secondItem="uBL-nB-QNG" secondAttribute="trailing" constant="16" id="xV4-gf-LG6"/>
                             <constraint firstItem="9nE-nC-meu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="ynK-7p-IdB"/>
-                            <constraint firstItem="uBL-nB-QNG" firstAttribute="width" secondItem="G9F-uF-VzS" secondAttribute="width" id="zZe-cf-c4e"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Профиль" id="1QF-7I-ZWv">
@@ -474,11 +456,10 @@
                         <outlet property="aboutTextView" destination="Kxd-NV-OAC" id="uGO-FK-dAq"/>
                         <outlet property="activityIndicator" destination="JzC-nT-BOk" id="2pd-ys-22o"/>
                         <outlet property="colorLabel" destination="MWx-be-ExT" id="cU4-BB-oBQ"/>
-                        <outlet property="gcdSaveButton" destination="uBL-nB-QNG" id="6t5-Fn-bzX"/>
                         <outlet property="loginLabel" destination="9nE-nC-meu" id="QwR-95-b6R"/>
                         <outlet property="loginTextField" destination="yyJ-3B-yNh" id="O7w-q6-8dx"/>
-                        <outlet property="operationSaveButton" destination="G9F-uF-VzS" id="KSs-zR-hjs"/>
                         <outlet property="profileImageView" destination="iiV-O7-6SZ" id="h3c-BA-mBb"/>
+                        <outlet property="saveButton" destination="uBL-nB-QNG" id="57m-X1-i90"/>
                         <outlet property="textColorLabel" destination="MWx-be-ExT" id="vN8-hJ-Awn"/>
                     </connections>
                 </viewController>

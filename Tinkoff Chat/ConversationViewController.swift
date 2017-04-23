@@ -21,7 +21,7 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var sendButton: UIButton!
     
     var userID: String?
-    weak var communicationManager: CommunicationManager?
+    weak var communicationManager: CommunicatorDelegate?
     
     var showNewMessageView: Bool = true
     override func viewDidLoad() {
@@ -48,7 +48,7 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.communicationManager?.conversation = nil
+        self.communicationManager?.conversationViewWillDisappear()
     }
     
     @IBAction func editingChanged(_ sender: Any) {
@@ -56,7 +56,7 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     @IBAction func sendMessage(_ sender: Any) {
-        self.communicationManager!.sendMessage(text: self.textField.text!, fromUser: "", toUser: self.userID!)
+        self.communicationManager?.sendMessage(self.textField.text!, fromUser: "", toUser: self.userID!)
     }
     
     func hideKeyboard() {
@@ -93,19 +93,21 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.communicationManager?.messages[self.userID!]?.count ?? 0
+        return self.communicationManager?.messageCountWith(user: self.userID ?? "") ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var reuseIdentifier: String
-        let message = self.communicationManager?.messages[self.userID!]![indexPath.row]
-        if message!.direction == .incoming {
-            reuseIdentifier = "incoming message cell"
-        } else {
-            reuseIdentifier = "outgoing message cell"
+        var reuseIdentifier: String = "incoming message cell"
+        var text: String = ""
+        if let message = self.communicationManager?.messagesWith(user: self.userID ?? "")?[indexPath.row] {
+            if message.direction == .outgoing {
+                reuseIdentifier = "outgoing message cell"
+            }
+            text = message.text ?? ""
+            
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! MessageCell
-        cell.msg = message!.text
+        cell.msg = text
         return cell
     }
 }

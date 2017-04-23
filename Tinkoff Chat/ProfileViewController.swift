@@ -24,6 +24,7 @@ class SaveButton: UIButton {
 
 class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     private var tapCounter = 0
+    private var dataManager: DataManager?
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var textColorLabel: UILabel!
     @IBOutlet weak var loginTextField: UITextField!
@@ -31,8 +32,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var colorLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var gcdSaveButton: UIButton!
-    @IBOutlet weak var operationSaveButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
     
     var imagePicker = UIImagePickerController()
     
@@ -49,10 +49,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         
         profileImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageClicked)))
         imagePicker.delegate = self
-        gcdSaveButton.isEnabled = false
-        operationSaveButton.isEnabled = false
+        saveButton.isEnabled = false
         activityIndicator.startAnimating()
-        GCDDataManager().load(fromFile: "data.dat") {
+        self.dataManager = OperationDataManager()
+        self.dataManager?.load(fromFile: "data.dat") {
             [weak self] (dict: [String:Any]?) in
             if let dict = dict {
                 self?.loginTextField.text = dict["login"] as? String
@@ -82,8 +82,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             alert.addAction(UIAlertAction(title: "Удалить изображение", style: .destructive) {
                 UIAlertAction in
                 self.profileImageView.image = UIImage(named: "defaultProfileImage")
-                self.gcdSaveButton.isEnabled = true
-                self.operationSaveButton.isEnabled = true
+                self.saveButton.isEnabled = true
             })
         }
         alert.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: nil))
@@ -129,8 +128,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     }
     
     @IBAction func saveAction(_ sender: UIButton) {
-        gcdSaveButton.isEnabled = false
-        operationSaveButton.isEnabled = false
+        saveButton.isEnabled = false
         self.activityIndicator.startAnimating()
         let data: [String:Any] = [
             "login": loginTextField.text ?? "",
@@ -138,13 +136,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
             "image": UIImagePNGRepresentation(profileImageView.image!) ?? Data(),
             "color": colorLabel.textColor
         ]
-        var manager: DataManager
-        if sender.titleLabel?.text == "GCD" {
-            manager = GCDDataManager()
-        } else {
-            manager = OperationDataManager()
-        }
-        manager.save(data: data, toFile: "data.dat") {
+        self.dataManager?.save(data: data, toFile: "data.dat") {
             [weak self] (saved: Bool) in
             self?.activityIndicator.stopAnimating()
             if saved {
@@ -169,8 +161,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         editingAction(sender)
     }
     @IBAction func editingAction(_ sender: Any) {
-        gcdSaveButton.isEnabled = true
-        operationSaveButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     func textViewDidChange(_ textView: UITextView) {
         editingAction(textView)

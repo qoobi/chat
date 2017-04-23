@@ -8,6 +8,18 @@
 
 import MultipeerConnectivity
 
+enum MessageDirection {
+    case incoming
+    case outgoing
+}
+
+struct Message {
+    var otherUser: String?
+    var text: String?
+    var direction: MessageDirection?
+    var date: Date?
+}
+
 protocol Communicator {
     func sendMessage(string: String, to userID: String, completionHandler: ((_ success: Bool, _ error: Error?) -> ())?)
     weak var delegate: CommunicatorDelegate? {get set}
@@ -24,7 +36,15 @@ protocol CommunicatorDelegate: class {
     func failedToStartAdvertising(error: Error)
     
     // messages
-    func didReveiveMessage(text: String, fromUser: String, toUser: String)
+    func didReveiveMessage(_ text: String, fromUser: String, toUser: String)
+    func sendMessage(_ text: String, fromUser: String, toUser: String)
+    
+    // other
+    func conversationViewWillDisappear()
+    func messageCountWith(user: String) -> Int?
+    func messagesWith(user: String) -> [Message]?
+    func userCount() -> Int?
+    var sortedUsers: [(String, String)] { get }
 }
 
 func generateMessageId() -> String {
@@ -114,7 +134,7 @@ extension MultipeerCommunicator: MCNearbyServiceBrowserDelegate {
 extension MultipeerCommunicator: MCSessionDelegate {
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         let data = try! JSONSerialization.jsonObject(with: data, options: []) as! [String:String]
-        self.delegate?.didReveiveMessage(text: data["text"] ?? "", fromUser: peerID.displayName, toUser: "")
+        self.delegate?.didReveiveMessage(data["text"] ?? "", fromUser: peerID.displayName, toUser: "")
     }
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
     }
@@ -127,31 +147,41 @@ extension MultipeerCommunicator: MCSessionDelegate {
     
 }
 
-enum MessageDirection {
-    case incoming
-    case outgoing
-}
-
-struct Message {
-    var otherUser: String?
-    var text: String?
-    var direction: MessageDirection?
-    var date: Date?
-}
-
 class CommunicationManager: CommunicatorDelegate {
     var communicator: MultipeerCommunicator
     weak var conversationsList: ConversationsListViewController?
     weak var conversation: ConversationViewController?
+    var sortedUsers: [(String, String)] = []
     var users: [String: String] = [:] {
         didSet {
-            self.reloadTables()
+            self.sortUsers()
         }
     }
     var messages: [String: [Message]] = [:] {
         didSet {
-            self.reloadTables()
+            self.sortUsers()
         }
+    }
+    func sortUsers() {
+        self.sortedUsers = self.users.sorted {
+            [weak self] (first, second) -> Bool in
+            let firstTime: Date? = self?.messages[first.key]?.last?.date
+            let secondTime: Date? = self?.messages[second.key]?.last?.date
+            if firstTime != nil {
+                if secondTime != nil {
+                    return firstTime! > secondTime!
+                } else {
+                    return true
+                }
+            } else {
+                if secondTime != nil {
+                    return false
+                } else {
+                    return first.value > second.value
+                }
+            }
+        }
+
     }
     init(withConversationsListViewController controller: ConversationsListViewController, userName: String, serviceType: String) {
         self.communicator = MultipeerCommunicator.init(withUserName: userName, serviceType: serviceType)
@@ -183,10 +213,10 @@ class CommunicationManager: CommunicatorDelegate {
     }
     
     // messages
-    func didReveiveMessage(text: String, fromUser: String, toUser: String) {
+    func didReveiveMessage(_ text: String, fromUser: String, toUser: String) {
         self.messages[fromUser]?.append(Message(otherUser: fromUser, text: text, direction: .incoming, date: Date()))
     }
-    func sendMessage(text: String, fromUser: String, toUser: String) {
+    func sendMessage(_ text: String, fromUser: String, toUser: String) {
         self.communicator.sendMessage(string: text, to: toUser) {
             [weak self] (success, error) in
             if success {
@@ -197,4 +227,17 @@ class CommunicationManager: CommunicatorDelegate {
             // TODO: handle error
         }
     }
+    func conversationViewWillDisappear() {
+        self.conversation = nil
+    }
+    func messageCountWith(user: String) -> Int? {
+        return self.messages[user]?.count ?? 0
+    }
+    func messagesWith(user: String) -> [Message]? {
+        return self.messages[user]
+    }
+    func userCount() -> Int? {
+        return self.users.count
+    }
+
 }

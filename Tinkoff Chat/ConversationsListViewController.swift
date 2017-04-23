@@ -11,7 +11,7 @@ import UIKit
 class ConversationsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    var communicationManager: CommunicationManager?
+    var communicationManager: CommunicatorDelegate?
     var userName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.communicationManager!.users.count
+        return self.communicationManager?.userCount() ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -67,29 +67,12 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "conversation cell", for: indexPath) as! ConversationCell
         // TODO: optimize
-        let sortedUsers = self.communicationManager!.users.sorted {
-            [weak self] (first, second) -> Bool in
-            let firstTime: Date? = self?.communicationManager!.messages[first.key]?.last?.date
-            let secondTime: Date? = self?.communicationManager!.messages[second.key]?.last?.date
-            if firstTime != nil {
-                if secondTime != nil {
-                    return firstTime! > secondTime!
-                } else {
-                    return true
-                }
-            } else {
-                if secondTime != nil {
-                    return false
-                } else {
-                    return first.value > second.value
-                }
-            }
-        }
+        let sortedUsers = self.communicationManager?.sortedUsers
         let i = indexPath.row
-        cell.userID = sortedUsers[i].key
+        cell.userID = sortedUsers?[i].0
         cell.online = true
-        cell.name = sortedUsers[i].value
-        let lastMessage = self.communicationManager!.messages[sortedUsers[i].key]?.last
+        cell.name = sortedUsers?[i].1
+        let lastMessage = self.communicationManager?.messagesWith(user: sortedUsers?[i].0 ?? "")?.last
         cell.message = lastMessage?.text
         cell.date = lastMessage?.date
         cell.hasUnreadMessages = false
@@ -104,7 +87,7 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
                 conversation.userID = cell.userID
                 conversation.communicationManager = self.communicationManager
                 conversation.showNewMessageView = segue.identifier != "peek"
-                self.communicationManager?.conversation = conversation
+                //self.communicationManager?.conversation = conversation
             }
         }
     }
