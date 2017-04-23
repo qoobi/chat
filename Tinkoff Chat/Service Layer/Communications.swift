@@ -37,14 +37,14 @@ protocol CommunicatorDelegate: class {
     
     // messages
     func didReveiveMessage(_ text: String, fromUser: String, toUser: String)
-    func sendMessage(_ text: String, fromUser: String, toUser: String)
+    func sendMessage(_ text: String, fromUser: String, toUser: String, completionHandler: ((_ success: Bool, _ error: Error?) -> ())?)
     
     // other
-    func conversationViewWillDisappear()
     func messageCountWith(user: String) -> Int?
     func messagesWith(user: String) -> [Message]?
     func userCount() -> Int?
     var sortedUsers: [(String, String)] { get }
+    var dataDidChange: (() -> ())? { get set }
 }
 
 func generateMessageId() -> String {
@@ -149,17 +149,18 @@ extension MultipeerCommunicator: MCSessionDelegate {
 
 class CommunicationManager: CommunicatorDelegate {
     var communicator: MultipeerCommunicator
-    weak var conversationsList: ConversationsListViewController?
-    weak var conversation: ConversationViewController?
     var sortedUsers: [(String, String)] = []
+    var dataDidChange: (() -> ())?
     var users: [String: String] = [:] {
         didSet {
             self.sortUsers()
+            self.dataDidChange?()
         }
     }
     var messages: [String: [Message]] = [:] {
         didSet {
             self.sortUsers()
+            self.dataDidChange?()
         }
     }
     func sortUsers() {
@@ -183,15 +184,9 @@ class CommunicationManager: CommunicatorDelegate {
         }
 
     }
-    init(withConversationsListViewController controller: ConversationsListViewController, userName: String, serviceType: String) {
+    init(withUserName userName: String, serviceType: String) {
         self.communicator = MultipeerCommunicator.init(withUserName: userName, serviceType: serviceType)
         self.communicator.delegate = self
-        self.conversationsList = controller
-    }
-    func reloadTables() {
-        // почему это не работает?
-        self.conversationsList?.tableView.reloadData()
-        self.conversation?.tableView.reloadData()
     }
     // discovering
     func didFindUser(userID: String, userName: String?) {
@@ -216,19 +211,16 @@ class CommunicationManager: CommunicatorDelegate {
     func didReveiveMessage(_ text: String, fromUser: String, toUser: String) {
         self.messages[fromUser]?.append(Message(otherUser: fromUser, text: text, direction: .incoming, date: Date()))
     }
-    func sendMessage(_ text: String, fromUser: String, toUser: String) {
+    func sendMessage(_ text: String, fromUser: String, toUser: String, completionHandler: ((_ success: Bool, _ error: Error?) -> ())?) {
         self.communicator.sendMessage(string: text, to: toUser) {
             [weak self] (success, error) in
             if success {
                 self?.messages[toUser]?.append(Message(otherUser: toUser, text: text, direction: .outgoing, date: Date()))
-                self?.conversation?.textField.text = ""
-                self?.conversation?.sendButton.isEnabled = false
+                completionHandler?(success, error)
             }
             // TODO: handle error
+            completionHandler?(success, error)
         }
-    }
-    func conversationViewWillDisappear() {
-        self.conversation = nil
     }
     func messageCountWith(user: String) -> Int? {
         return self.messages[user]?.count ?? 0

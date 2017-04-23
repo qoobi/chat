@@ -23,13 +23,17 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         if let dict = dict {
             self.userName = dict["login"] as? String
         }
-        self.communicationManager = CommunicationManager.init(withConversationsListViewController: self, userName: self.userName ?? "", serviceType: "tinkoff-chat")
+        self.communicationManager = CommunicationManager.init(withUserName: self.userName ?? "", serviceType: "tinkoff-chat")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let selectedRow = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: selectedRow, animated: animated)
+        }
+        self.communicationManager?.dataDidChange = {
+            [weak self] in
+            self?.tableView.reloadData()
         }
         tableView.reloadData()
     }
@@ -87,6 +91,9 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
                 conversation.userID = cell.userID
                 conversation.communicationManager = self.communicationManager
                 conversation.showNewMessageView = segue.identifier != "peek"
+                self.communicationManager?.dataDidChange = {
+                    conversation.tableView.reloadData()
+                }
                 //self.communicationManager?.conversation = conversation
             }
         }

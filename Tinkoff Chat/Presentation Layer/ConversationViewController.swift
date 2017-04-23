@@ -47,16 +47,18 @@ class ConversationViewController: UIViewController, UITableViewDelegate, UITable
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        self.communicationManager?.conversationViewWillDisappear()
-    }
-    
     @IBAction func editingChanged(_ sender: Any) {
         self.sendButton.isEnabled = self.textField.text != ""
     }
     
     @IBAction func sendMessage(_ sender: Any) {
-        self.communicationManager?.sendMessage(self.textField.text!, fromUser: "", toUser: self.userID!)
+        self.communicationManager?.sendMessage(self.textField.text!, fromUser: "", toUser: self.userID!, completionHandler: {
+            [weak self] (success, error) in
+            if success {
+                self?.textField.text = ""
+                self?.sendButton.isEnabled = false
+            }
+        })
     }
     
     func hideKeyboard() {
