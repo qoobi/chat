@@ -33,7 +33,9 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
         }
         self.communicationManager?.dataDidChange = {
             [weak self] in
-            self?.tableView.reloadData()
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
         }
         tableView.reloadData()
     }
@@ -92,7 +94,9 @@ class ConversationsListViewController: UIViewController, UITableViewDelegate, UI
                 conversation.communicationManager = self.communicationManager
                 conversation.showNewMessageView = segue.identifier != "peek"
                 self.communicationManager?.dataDidChange = {
-                    conversation.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        conversation.tableView.reloadData()
+                    }
                 }
                 //self.communicationManager?.conversation = conversation
             }
