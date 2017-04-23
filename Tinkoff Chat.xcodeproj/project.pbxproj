@@ -50,8 +50,8 @@
 		A65D712F1E7077CC003A787D = {
 			isa = PBXGroup;
 			children = (
-				A65D713A1E7077CC003A787D /* Tinkoff Chat */,
 				A65D71391E7077CC003A787D /* Products */,
+				A65D713A1E7077CC003A787D /* Tinkoff Chat */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,12 +66,12 @@
 		A65D713A1E7077CC003A787D /* Tinkoff Chat */ = {
 			isa = PBXGroup;
 			children = (
-				A65D713B1E7077CC003A787D /* AppDelegate.swift */,
 				A66D45E31EACFEC40051C1CE /* Presentation Layer */,
 				A66D45E41EAD042C0051C1CE /* Service Layer */,
+				A65D713B1E7077CC003A787D /* AppDelegate.swift */,
 				A65D71421E7077CC003A787D /* Assets.xcassets */,
-				A65D71441E7077CC003A787D /* LaunchScreen.storyboard */,
 				A65D71471E7077CC003A787D /* Info.plist */,
+				A65D71441E7077CC003A787D /* LaunchScreen.storyboard */,
 			);
 			path = "Tinkoff Chat";
 			sourceTree = "<group>";
@@ -79,14 +79,15 @@
 		A66D45E31EACFEC40051C1CE /* Presentation Layer */ = {
 			isa = PBXGroup;
 			children = (
-				A65D713D1E7077CC003A787D /* ProfileViewController.swift */,
 				A6821A501E8705BE002ECB76 /* ConversationCell.swift */,
-				A6821A581E87C2F5002ECB76 /* MessageCell.swift */,
-				A692A08D1E86FBDE0016B8DE /* ConversationsListViewController.swift */,
 				A6821A561E87B914002ECB76 /* ConversationViewController.swift */,
+				A692A08D1E86FBDE0016B8DE /* ConversationsListViewController.swift */,
 				A65D713F1E7077CC003A787D /* Main.storyboard */,
+				A6821A581E87C2F5002ECB76 /* MessageCell.swift */,
+				A65D713D1E7077CC003A787D /* ProfileViewController.swift */,
 			);
 			name = "Presentation Layer";
+			path = "Presentation Layer";
 			sourceTree = "<group>";
 		};
 		A66D45E41EAD042C0051C1CE /* Service Layer */ = {
@@ -96,6 +97,7 @@
 				A6767A981E93821200F8CF6C /* DataManager.swift */,
 			);
 			name = "Service Layer";
+			path = "Service Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +193,7 @@
 				A65D71401E7077CC003A787D /* Base */,
 			);
 			name = Main.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 		A65D71441E7077CC003A787D /* LaunchScreen.storyboard */ = {
@@ -199,6 +202,7 @@
 				A65D71451E7077CC003A787D /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
