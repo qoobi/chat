@@ -25,6 +25,7 @@ class SaveButton: UIButton {
 class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     private var tapCounter = 0
     private var dataManager: DataManager?
+    private var storageManager: StorageManager?
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var textColorLabel: UILabel!
     @IBOutlet weak var loginTextField: UITextField!
@@ -35,6 +36,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     @IBOutlet weak var saveButton: UIButton!
     
     var imagePicker = UIImagePickerController()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +53,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
         imagePicker.delegate = self
         saveButton.isEnabled = false
         activityIndicator.startAnimating()
-        self.dataManager = OperationDataManager()
+        /*self.dataManager = OperationDataManager()
         self.dataManager?.load(fromFile: "data.dat") {
             [weak self] (dict: [String:Any]?) in
             if let dict = dict {
@@ -61,6 +63,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
                 self?.colorLabel.textColor = dict["color"] as! UIColor
             }
             self?.activityIndicator.stopAnimating()
+        }*/
+        self.storageManager = StorageManager()
+        if let appUser = storageManager?.getAppUser() {
+            self.loginTextField.text = appUser.currentUser?.name
+            self.aboutTextView.text = appUser.currentUser?.about
+            self.profileImageView.image = UIImage.init(data: appUser.currentUser?.profileImage as Data? ?? Data())
+            self.activityIndicator.stopAnimating()
         }
     }
 
@@ -130,7 +139,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
     @IBAction func saveAction(_ sender: UIButton) {
         saveButton.isEnabled = false
         self.activityIndicator.startAnimating()
-        let data: [String:Any] = [
+        /*let data: [String:Any] = [
             "login": loginTextField.text ?? "",
             "about": aboutTextView.text,
             "image": UIImagePNGRepresentation(profileImageView.image!) ?? Data(),
@@ -152,8 +161,14 @@ class ProfileViewController: UIViewController, UITextFieldDelegate, UIImagePicke
                 }))
                 self?.present(alert, animated: true, completion: nil)
             }
+        }*/
+        if let appUser = storageManager?.getAppUser() {
+            appUser.currentUser?.name = loginTextField.text
+            appUser.currentUser?.about = aboutTextView.text
+            appUser.currentUser?.profileImage = UIImagePNGRepresentation(profileImageView.image!) as NSData? ?? NSData()
+            storageManager?.save()
+            self.activityIndicator.stopAnimating()
         }
-        
     }
 
     @IBAction func colorButtonAction(_ sender: UIButton) {
